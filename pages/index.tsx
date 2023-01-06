@@ -16,7 +16,7 @@ export default function Home() {
       </Head>
       <main >
         <p>
-          Get started by edisasdsdting&nbsp;
+          test&nbsp;
         </p>
   
       </main>
