@@ -30,7 +30,6 @@ export const GlobalStyle = css`
 
   /* base styles */
   body {
-    background: var(--secondary);
     overflow-x: hidden;
   }
 
