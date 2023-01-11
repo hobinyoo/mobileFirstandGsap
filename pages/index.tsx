@@ -1,11 +1,13 @@
-import BarcodeSection from '@components/BarcodeSection'
 import StartSection from '@components/StartSection'
+import React from 'react'
 
 export default function Home() {
   return (
     <>
       <StartSection />
-      <BarcodeSection />
+
+      {/* <LoadingSection /> */}
+      {/* <BarcodeSection /> */}
     </>
   )
 }

@@ -2,9 +2,25 @@ import { css } from '@emotion/react'
 
 //GlobalStyles
 export const GlobalStyle = css`
+
+
   :root {
     --primary: #ffc636;
     --secondary: #0a0b5b;
+
+    // Fonts As per the type scale generator => https://material-io.cn/inline-tools/typography/
+    --fontBig: 7em; //88 px
+    --fontxxxl: 5.5em; //88 px
+    --fontxxl: 3.4375em; //55 px
+    --fontxl: 2.75em; //44 px
+    --fontlg: 1.9375em; //31 px
+    --fontmd: 1.375em; //22 px
+    --fontsm: 1.125em; //18 px
+    --fontxs: 1em; //16 px
+    --fontxxs: 0.75em; //12 px
+    //font
+
+    --fontR: 'KoreanRKTR';
   }
 
   *,
@@ -14,6 +30,15 @@ export const GlobalStyle = css`
   }
 
   /* reset */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    padding: 0;
+  }
   body,
   p,
   a,
@@ -32,5 +57,4 @@ export const GlobalStyle = css`
   body {
     overflow-x: hidden;
   }
-
 `

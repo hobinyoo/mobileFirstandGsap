@@ -3,10 +3,17 @@ import styled from '@emotion/styled'
 import Image from 'next/image'
 import gsap from 'gsap'
 import backgroundImg from '../public/images/backgroundImg.png'
+import getBarcodeImg from '../public/images/getBarcode.png'
 import tapeLeft from '../public/images/tapeLeft.png'
 import tapeRight from '../public/images/tapeRight.png'
 import slide from '../public/images/slide.png'
+import thanks from '../public/images/thanks.png'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import SelectSwiper from './SelectSwiper'
+
+interface GetBarcodeProps {
+  getBarcode: boolean
+}
 
 const Section = styled.section`
   width: 100vw;
@@ -19,29 +26,52 @@ const Section = styled.section`
   overflow: hidden;
   background-color: black;
 `
-const SectionOverlay = styled.div`
-  z-index: 1;
+const SectionOverlay = styled.div<GetBarcodeProps>`
+  z-index: 2;
   position: absolute;
   width: 100vw;
   min-height: 100vh;
+  background-color: rgb(0, 0, 0, 0.5);
 `
 const BackImage = styled.div`
   width: 100vw;
   min-height: 100vh;
   position: relative;
-  z-index: 0;
+  transform: scale(0.9);
 `
-const TapeLeft = styled.div`
+const GetBarcode = styled.div`
+  position: absolute;
+  width: 18vw;
+  height: 18vh;
+  bottom: 0;
+  left: 8vw;
+  z-index: 2;
+`
+const SectionInner = styled.div`
+  z-index: 1;
+  position: absolute;
+  width: 70vw;
+  min-height: 50vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fontR);
+  opacity: 0;
+`
+
+const TapeLeft = styled.div<GetBarcodeProps>`
   width: 100vw;
   min-height: 100vh;
   position: fixed;
-  z-index: 1;
+  z-index: ${(props) => (props.getBarcode ? '3' : '1')};
 `
-const TapeRight = styled.div`
+const TapeRight = styled.div<GetBarcodeProps>`
   width: 100vw;
   min-height: 100vh;
   position: fixed;
-  z-index: 1;
+  z-index: ${(props) => (props.getBarcode ? '3' : '1')};
 `
 const Slide = styled.div`
   z-index: 2;
@@ -50,7 +80,12 @@ const Slide = styled.div`
   position: fixed;
   margin-top: 3rem;
 `
-
+const Thanks = styled.div`
+  z-index: 2;
+  width: 20rem;
+  height: auto;
+  position: fixed;
+`
 export default function StartSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const tapeLeftRef = useRef<HTMLDivElement>(null)
@@ -58,15 +93,23 @@ export default function StartSection() {
   const slideRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
   const getInfoRef = useRef<HTMLDivElement>(null)
+  const innerRef = useRef<HTMLDivElement>(null)
+  const barcodeRef = useRef<HTMLDivElement>(null)
+  const thanksRef = useRef<HTMLDivElement>(null)
   gsap.registerPlugin(ScrollTrigger)
+
+  const [getBarcode, setGetBarcode] = useState<boolean>(false)
 
   useLayoutEffect(() => {
     let Elem = sectionRef.current
     let LeftTapeElem = tapeLeftRef.current
     let RightTapeElem = tapeRightRef.current
-    let slideElem = slideRef.current
-    let overlayElem = overlayRef.current
-    let getInfoElem = getInfoRef.current
+    let SlideElem = slideRef.current
+    let OverlayElem = overlayRef.current
+    let GetInfoElem = getInfoRef.current
+    let InnerElem = innerRef.current
+    let BarcodeElem = barcodeRef.current
+    let ThanksElem = thanksRef.current
 
     //start end는 첫번째는 시작점 두번째는 시작점부터의 뷰포트
     //scrollTrigger은 start부터 end까지 scrollbar를 생성한다.
@@ -74,50 +117,113 @@ export default function StartSection() {
     //fromto에서 일어나는 일은 생겨난 스크롤 동안 일어나는 변화를 감지
     //to는 순차적으로
     //fromto에서 key도 순차적으로 할 수 있음
-    let t1 = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: Elem,
-          start: 'top top',
-          end: `+=${Elem != null && Elem.offsetWidth + 1000}`,
-          scrub: 1,
-          pin: true,
-          pinSpacing: true,
-        },
-      })
-      .fromTo(slideElem, { y: '0' }, { y: '50%', opacity: '0' }, 'key1')
-      .fromTo(LeftTapeElem, { x: '0' }, { x: `${-Elem!.offsetWidth}` }, 'key2')
-      .fromTo(RightTapeElem, { x: '0' }, { x: `${Elem!.offsetWidth}` }, 'key2')
-      .fromTo(
-        overlayElem,
-        { backgroundColor: 'rgb(0,0,0,0.7)', ease: 'none' },
-        { backgroundColor: 'rgb(0,0,0,0)', ease: 'none' },
-        'key2'
-      )
-      .fromTo(getInfoElem, { scale: 0.9 }, { scale: 1 }, 'key2')
-    return () => {
-      if (t1) t1.kill()
+    if (getBarcode) {
+      //스크롤 맨위로
+      window.scrollTo(0, 0)
+
+      setTimeout(() => {
+        gsap.to(BarcodeElem, {
+          width: '100vw',
+          height: '100vh',
+          left: '0',
+        })
+      }, 3000)
+      let t2 = gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: Elem,
+            start: 'top top',
+            end: `+=${Elem != null && Elem.offsetWidth + 1000}`,
+            scrub: 1,
+            pin: true,
+            pinSpacing: true,
+          },
+        })
+        .to(
+          OverlayElem,
+          { backgroundColor: 'rgb(0,0,0,0.5)', ease: 'none', zIndex: '3' },
+          'key1'
+        )
+        .to(LeftTapeElem, { x: '0' }, 'key1')
+        .to(RightTapeElem, { x: '0' }, 'key1')
+        .to(BarcodeElem, { scale: 0.9 }, 'key1')
+
+        .to(OverlayElem, { zIndex: '4' }, 'key2')
+        .fromTo(
+          ThanksElem,
+          { y: '50%', opacity: '0', zIndex: '0' },
+          { y: '50%', opacity: '1', zIndex: '5' },
+          'key2'
+        )
+
+      return () => {
+        if (t2) t2.kill()
+      }
+    } else {
+      let t1 = gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: Elem,
+            start: 'top top',
+            end: `+=${Elem != null && Elem.offsetWidth + 1000}`,
+            scrub: 1,
+            pin: true,
+            pinSpacing: true,
+          },
+        })
+        .to(SlideElem, { y: '50%', opacity: '0', zIndex: '0' }, 'key1')
+        .to(OverlayElem, { zIndex: '1' }, 'key1')
+        .to(LeftTapeElem, { x: `${-Elem!.offsetWidth}` }, 'key2')
+        .to(RightTapeElem, { x: `${Elem!.offsetWidth}` }, 'key2')
+        .to(InnerElem, { opacity: 1 }, 'key2')
+        .to(
+          OverlayElem,
+          { backgroundColor: 'rgb(0,0,0,0)', ease: 'none' },
+          'key2'
+        )
+        .to(GetInfoElem, { scale: 1 }, 'key2')
+
+      return () => {
+        if (t1) t1.kill()
+      }
     }
-  }, [])
+  }, [getBarcode])
+
   return (
     <>
       <Section ref={sectionRef}>
-        <SectionOverlay ref={overlayRef} />
+        <SectionOverlay getBarcode={getBarcode} ref={overlayRef} />
 
         <BackImage ref={getInfoRef}>
-          <Image src={backgroundImg} fill alt="backgroundImg" />
+          <Image src={backgroundImg} fill alt="backgroundImg" quality={100} />
         </BackImage>
 
-        <TapeLeft ref={tapeLeftRef}>
-        <Image src={tapeLeft} fill alt="tapeaLeft" />
-      </TapeLeft>
+        <TapeLeft ref={tapeLeftRef} getBarcode={getBarcode}>
+          <Image src={tapeLeft} fill alt="tapeaLeft" quality={100} />
+        </TapeLeft>
 
-      <TapeRight ref={tapeRightRef}>
-        <Image src={tapeRight} fill alt="tapeaRight" />
-      </TapeRight>
+        <TapeRight ref={tapeRightRef} getBarcode={getBarcode}>
+          <Image src={tapeRight} fill alt="tapeaRight" quality={100} />
+        </TapeRight>
+
+        {getBarcode && (
+          <>
+            <GetBarcode ref={barcodeRef}>
+              <Image src={getBarcodeImg} fill alt="getBarcode" quality={100} />
+            </GetBarcode>
+            
+            <Thanks ref={thanksRef}>
+              <Image src={thanks} alt="thanks" quality={100} />
+            </Thanks>
+          </>
+        )}
+
+        <SectionInner ref={innerRef}>
+          <SelectSwiper getBarcode={getBarcode} setGetBarcode={setGetBarcode} />
+        </SectionInner>
 
         <Slide ref={slideRef}>
-          <Image src={slide} alt="slide" />
+          <Image src={slide} alt="slide" quality={100} />
         </Slide>
       </Section>
     </>
