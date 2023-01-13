@@ -92,4 +92,5 @@ export const GlobalStyle = css`
     /* 모바일 웹 브라우저 당겨서 새로고침 막기 */
     overscroll-behavior: contain;
   }
+  
 `

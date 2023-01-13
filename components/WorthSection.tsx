@@ -20,12 +20,18 @@ const Selectul = styled.ul`
 const Selectli = styled.li`
   display: flex;
   align-items: center;
-  margin-bottom: 1vh;
   position: relative;
 `
 const TextInfo = styled.p`
   position: absolute;
   margin-left: 8vw;
+`
+
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 65vw;
+  height: 6vh;
+  z-index: -1;
 `
 
 const WorthSection = ({
@@ -35,13 +41,11 @@ const WorthSection = ({
   worth: string
   setWorth: Dispatch<SetStateAction<string>>
 }) => {
-  const Text = ['가족','일','외모','재력']
+  const Text = ['가족', '일', '외모', '재력']
 
   return (
     <>
-      <QuestionText>
-        가장 중요하게 생각하는 가치를 고르세요.
-      </QuestionText>
+      <QuestionText>가장 중요하게 생각하는 가치를 고르세요.</QuestionText>
 
       <Selectul>
         {Text.map((value, index) => (
@@ -53,9 +57,27 @@ const WorthSection = ({
           >
             <TextInfo>{value}</TextInfo>
             {worth != value ? (
-              <Image src={selectInfoImg} sizes="100%" alt="selectInfo" />
+              <ImageWrapper>
+                <Image
+                  fill
+                  priority
+                  style={{ objectFit: 'contain', objectPosition: 'center' }}
+                  src={selectInfoImg}
+                  sizes="100%"
+                  alt="selectInfo"
+                />
+              </ImageWrapper>
             ) : (
-              <Image src={selectedInfoImg} sizes="100%" alt="selectedInfo" />
+              <ImageWrapper>
+                <Image
+                  fill
+                  priority
+                  style={{ objectFit: 'contain', objectPosition: 'center' }}
+                  src={selectedInfoImg}
+                  sizes="100%"
+                  alt="selectedInfo"
+                />
+              </ImageWrapper>
             )}
           </Selectli>
         ))}

@@ -20,12 +20,17 @@ const Selectul = styled.ul`
 const Selectli = styled.li`
   display: flex;
   align-items: center;
-  margin-bottom: 1vh;
   position: relative;
 `
 const TextInfo = styled.p`
   position: absolute;
   margin-left: 8vw;
+`
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 65vw;
+  height: 6vh;
+  z-index: -1;
 `
 
 const ItemSection = ({
@@ -51,9 +56,25 @@ const ItemSection = ({
           >
             <TextInfo>{value}</TextInfo>
             {item != value ? (
-              <Image src={selectInfoImg} sizes="100%" alt="selectInfo" />
+              <ImageWrapper>
+                <Image
+                  priority
+                  src={selectInfoImg}
+                  fill
+                  style={{ objectFit: 'contain', objectPosition: 'center' }}
+                  alt="selectInfo"
+                />
+              </ImageWrapper>
             ) : (
-              <Image src={selectedInfoImg} sizes="100%" alt="selectedInfo" />
+              <ImageWrapper>
+                <Image
+                  priority
+                  src={selectedInfoImg}
+                  fill
+                  style={{ objectFit: 'contain', objectPosition: 'center' }}
+                  alt="selectedInfo"
+                />
+              </ImageWrapper>
             )}
           </Selectli>
         ))}

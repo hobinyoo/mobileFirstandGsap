@@ -26,8 +26,6 @@ const Section = styled.section`
   position: sticky;
   overflow: hidden;
   background-color: black;
-  left: 0;
-  bottom: 0;
   font-family: var(--fontR);
 
   /* only ios */
@@ -42,11 +40,11 @@ const SectionOverlay = styled.div<GetBarcodeProps>`
   min-height: 100%;
   background-color: rgb(0, 0, 0, 0.5);
 `
-const BackImage = styled.div`
+const BackImage = styled.div<GetBarcodeProps>`
   width: 100vw;
   min-height: 100%;
   position: relative;
-  transform: scale(0.9);
+  transform: ${(props) => (props.getBarcode ? 'scale(1)' : 'scale(0.9)')};
   opacity: 1;
 `
 const GetBarcode = styled.div`
@@ -96,8 +94,15 @@ const Thanks = styled.div`
   height: auto;
   position: fixed;
 `
+const DivInner = styled.div`
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  z-index: 1;
+`
 export default function StartSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
+  const divInnerRef = useRef<HTMLDivElement>(null)
   const tapeLeftRef = useRef<HTMLDivElement>(null)
   const tapeRightRef = useRef<HTMLDivElement>(null)
   const slideRef = useRef<HTMLDivElement>(null)
@@ -112,6 +117,7 @@ export default function StartSection() {
 
   useLayoutEffect(() => {
     let Elem = sectionRef.current
+    let DivElem = divInnerRef.current
     let LeftTapeElem = tapeLeftRef.current
     let RightTapeElem = tapeRightRef.current
     let SlideElem = slideRef.current
@@ -129,7 +135,7 @@ export default function StartSection() {
     //fromto에서 key도 순차적으로 할 수 있음
     if (getBarcode) {
       window.scrollTo({
-        top: Elem?.scrollTop,
+        top: DivElem?.scrollTop,
       })
       setTimeout(() => {
         gsap.to(BarcodeElem, {
@@ -144,13 +150,12 @@ export default function StartSection() {
       let t2 = gsap
         .timeline({
           scrollTrigger: {
-            trigger: Elem,
+            trigger: DivElem,
             start: 'top top',
-            end: `+=${Elem != null && Elem.offsetWidth + 1000}`,
+            end: `+=${DivElem != null && DivElem.offsetWidth + 1000}`,
             scrub: 1,
             pin: true,
             pinSpacing: true,
-            markers: true,
           },
         })
         .to(
@@ -182,7 +187,6 @@ export default function StartSection() {
             end: `+=${Elem != null && Elem.offsetWidth + 1000}`,
             scrub: 1,
             pin: true,
-            markers: true,
             pinSpacing: true,
           },
         })
@@ -209,7 +213,7 @@ export default function StartSection() {
       <Section ref={sectionRef}>
         <SectionOverlay getBarcode={getBarcode} ref={overlayRef} />
 
-        <BackImage ref={getInfoRef}>
+        <BackImage ref={getInfoRef} getBarcode={getBarcode}>
           <Image src={backgroundImg} fill alt="backgroundImg" quality={100} />
         </BackImage>
 
@@ -221,8 +225,26 @@ export default function StartSection() {
           <Image src={tapeRight} fill alt="tapeaRight" quality={100} />
         </TapeRight>
 
+        <SectionInner ref={innerRef}>
+          {!getBarcode && <SelectSwiper getBarcode={getBarcode} setGetBarcode={setGetBarcode} />}
+        </SectionInner>
+
+        <Slide ref={slideRef}>
+          <Image src={slide} alt="slide" quality={100} />
+        </Slide>
+
         {getBarcode && (
           <>
+            <DivInner ref={divInnerRef}>
+              <BackImage ref={getInfoRef} getBarcode={getBarcode}>
+                <Image
+                  src={backgroundImg}
+                  fill
+                  alt="backgroundImg"
+                  quality={100}
+                />
+              </BackImage>
+            </DivInner>
             <GetBarcode ref={barcodeRef}>
               <Image src={getBarcodeImg} fill alt="getBarcode" quality={100} />
             </GetBarcode>
@@ -231,14 +253,6 @@ export default function StartSection() {
             </Thanks>
           </>
         )}
-
-        <SectionInner ref={innerRef}>
-          <SelectSwiper getBarcode={getBarcode} setGetBarcode={setGetBarcode} />
-        </SectionInner>
-
-        <Slide ref={slideRef}>
-          <Image src={slide} alt="slide" quality={100} />
-        </Slide>
       </Section>
     </>
   )

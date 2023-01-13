@@ -7,7 +7,6 @@ import React, {
 } from 'react'
 import styled from '@emotion/styled'
 import Image from 'next/image'
-import loadingImg from '@images/loading.png'
 import nextBtn from '@images/nextBtn.png'
 import prevBtn from '@images/prevBtn.png'
 
@@ -29,7 +28,6 @@ interface ButtonProps {
 
 const SwiperRoot = styled.div`
   width: 100%;
-
   //스와이퍼 custom
   .swiper {
     &-wrapper,
@@ -64,6 +62,7 @@ const ButtonLeft = styled.div<ButtonProps>`
   bottom: 1vh;
   opacity: ${(props) => (props.slideIndex == 0 ? '0' : '1')};
 `
+
 export default function SelectSwiper({
   getBarcode,
   setGetBarcode,
@@ -154,11 +153,6 @@ export default function SelectSwiper({
           <SwiperSlide>
             <LocationSection location={location} setLocation={setLocation} />
           </SwiperSlide>
-          {findInfo == undefined && (
-            <SwiperSlide>
-              <Image src={loadingImg} style={{ width: '99%' }} alt="loading" />
-            </SwiperSlide>
-          )}
         </Swiper>
       )}
 
