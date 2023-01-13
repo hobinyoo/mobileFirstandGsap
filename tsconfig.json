@@ -18,7 +18,7 @@
     "baseUrl": "",
     "paths": {
       "@components/*": ["components/*"],
-      "@images/*": ["images/*"]
+      "@images/*": ["public/images/*"]
     },
     "types": ["@emotion/react/types/css-prop"]
   },

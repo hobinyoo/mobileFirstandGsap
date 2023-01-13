@@ -3,6 +3,29 @@ import { css } from '@emotion/react'
 //GlobalStyles
 export const GlobalStyle = css`
 
+  @font-face {
+    font-family: 'KoreanRKTR';
+    src: url('/fonts/roket.ttf') format('ttf');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'KoreanRKTR';
+    src: url('/fonts/roket.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'KoreanRKTR';
+    src: url('/fonts/roket.otf') format('otf');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
 
   :root {
     --primary: #ffc636;
@@ -54,7 +77,19 @@ export const GlobalStyle = css`
   }
 
   /* base styles */
+
+  html,
   body {
-    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+
+    /* 배경 색상 지정 */
+    background-color: black;
+
+    /* 모바일 웹 브라우저 당겨서 새로고침 막기 */
+    overscroll-behavior: contain;
   }
 `

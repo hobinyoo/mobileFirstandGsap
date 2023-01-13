@@ -1,15 +1,16 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState, useEffect } from 'react'
 import styled from '@emotion/styled'
 import Image from 'next/image'
 import gsap from 'gsap'
-import backgroundImg from '../public/images/backgroundImg.png'
-import getBarcodeImg from '../public/images/getBarcode.png'
-import tapeLeft from '../public/images/tapeLeft.png'
-import tapeRight from '../public/images/tapeRight.png'
-import slide from '../public/images/slide.png'
-import thanks from '../public/images/thanks.png'
+import backgroundImg from '@images/backgroundImg.png'
+import getBarcodeImg from '@images/getBarcode.png'
+import tapeLeft from '@images/tapeLeft.png'
+import tapeRight from '@images/tapeRight.png'
+import slide from '@images/slide.png'
+import thanks from '@images/thanks.png'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SelectSwiper from './SelectSwiper'
+import 'animate.css'
 
 interface GetBarcodeProps {
   getBarcode: boolean
@@ -22,22 +23,31 @@ const Section = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: sticky;
   overflow: hidden;
   background-color: black;
+  left: 0;
+  bottom: 0;
+  font-family: var(--fontR);
+
+  /* only ios */
+  /* @supports (-webkit-touch-callout: none) { 
+  height: -webkit-fill-available;
+} */
 `
 const SectionOverlay = styled.div<GetBarcodeProps>`
   z-index: 2;
   position: absolute;
   width: 100vw;
-  min-height: 100vh;
+  min-height: 100%;
   background-color: rgb(0, 0, 0, 0.5);
 `
 const BackImage = styled.div`
   width: 100vw;
-  min-height: 100vh;
+  min-height: 100%;
   position: relative;
   transform: scale(0.9);
+  opacity: 1;
 `
 const GetBarcode = styled.div`
   position: absolute;
@@ -56,20 +66,20 @@ const SectionInner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding-top: 3vh;
   font-family: var(--fontR);
   opacity: 0;
 `
 
 const TapeLeft = styled.div<GetBarcodeProps>`
   width: 100vw;
-  min-height: 100vh;
+  min-height: 100%;
   position: fixed;
   z-index: ${(props) => (props.getBarcode ? '3' : '1')};
 `
 const TapeRight = styled.div<GetBarcodeProps>`
   width: 100vw;
-  min-height: 100vh;
+  min-height: 100%;
   position: fixed;
   z-index: ${(props) => (props.getBarcode ? '3' : '1')};
 `
@@ -118,16 +128,19 @@ export default function StartSection() {
     //to는 순차적으로
     //fromto에서 key도 순차적으로 할 수 있음
     if (getBarcode) {
-      //스크롤 맨위로
-      window.scrollTo(0, 0)
-
+      window.scrollTo({
+        top: Elem?.scrollTop,
+      })
       setTimeout(() => {
         gsap.to(BarcodeElem, {
           width: '100vw',
           height: '100vh',
           left: '0',
         })
-      }, 3000)
+
+        BarcodeElem?.classList.add('animate__animated', 'animate__flip')
+      }, 1000)
+
       let t2 = gsap
         .timeline({
           scrollTrigger: {
@@ -137,6 +150,7 @@ export default function StartSection() {
             scrub: 1,
             pin: true,
             pinSpacing: true,
+            markers: true,
           },
         })
         .to(
@@ -147,7 +161,7 @@ export default function StartSection() {
         .to(LeftTapeElem, { x: '0' }, 'key1')
         .to(RightTapeElem, { x: '0' }, 'key1')
         .to(BarcodeElem, { scale: 0.9 }, 'key1')
-
+        .to(GetInfoElem, { opacity: '0' }, 'key1')
         .to(OverlayElem, { zIndex: '4' }, 'key2')
         .fromTo(
           ThanksElem,
@@ -168,6 +182,7 @@ export default function StartSection() {
             end: `+=${Elem != null && Elem.offsetWidth + 1000}`,
             scrub: 1,
             pin: true,
+            markers: true,
             pinSpacing: true,
           },
         })
@@ -211,7 +226,6 @@ export default function StartSection() {
             <GetBarcode ref={barcodeRef}>
               <Image src={getBarcodeImg} fill alt="getBarcode" quality={100} />
             </GetBarcode>
-            
             <Thanks ref={thanksRef}>
               <Image src={thanks} alt="thanks" quality={100} />
             </Thanks>

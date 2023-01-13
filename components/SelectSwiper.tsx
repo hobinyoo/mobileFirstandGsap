@@ -7,7 +7,9 @@ import React, {
 } from 'react'
 import styled from '@emotion/styled'
 import Image from 'next/image'
-import loadingImg from '../public/images/loading.png'
+import loadingImg from '@images/loading.png'
+import nextBtn from '@images/nextBtn.png'
+import prevBtn from '@images/prevBtn.png'
 
 // Import Swiper React components
 import SwiperCore, { Navigation, Scrollbar } from 'swiper'
@@ -24,20 +26,42 @@ import LocationSection from './LocationSection'
 interface ButtonProps {
   slideIndex: number
 }
+
+const SwiperRoot = styled.div`
+  width: 100%;
+
+  //스와이퍼 custom
+  .swiper {
+    &-wrapper,
+    &-container {
+      display: flex;
+      align-items: center;
+    }
+    &-slide {
+    }
+  }
+`
 const IntroText = styled.div`
-  font-size: var(--fontsm);
+  font-size: 1.3rem;
   text-align: center;
-  width: 70vw;
+  width: 95%;
+  margin: auto;
 `
-const ButtonRight = styled.button`
-  position: absolute;
-  right: 1rem;
-  bottom: 1rem;
+const IntroTextSecond = styled.div`
+  font-size: 1.1rem;
+  text-align: center;
+  width: 85%;
+  margin: 1rem auto;
 `
-const ButtonLeft = styled.button<ButtonProps>`
+const ButtonRight = styled.div`
   position: absolute;
-  left: 1rem;
-  bottom: 1rem;
+  right: 0;
+  bottom: 1vh;
+`
+const ButtonLeft = styled.div<ButtonProps>`
+  position: absolute;
+  left: 0;
+  bottom: 1vh;
   opacity: ${(props) => (props.slideIndex == 0 ? '0' : '1')};
 `
 export default function SelectSwiper({
@@ -49,10 +73,9 @@ export default function SelectSwiper({
 }) {
   SwiperCore.use([Navigation, Scrollbar])
 
-
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
-  const nextRef = useRef<HTMLButtonElement>(null)
-  const prevRef = useRef<HTMLButtonElement>(null)
+  const nextRef = useRef<HTMLDivElement>(null)
+  const prevRef = useRef<HTMLDivElement>(null)
 
   //silde Index
   const [slideIndex, setSlideIndex] = useState<number>(0)
@@ -98,45 +121,57 @@ export default function SelectSwiper({
   const GetBarcodeClick = () => {
     if (findInfo == undefined && slideIndex == 4) {
       setGetBarcode(true)
+    } else if (findInfo != undefined && slideIndex == 4) {
+      alert('정보 입력을 완료해주세요.')
     }
   }
   return (
-    <>
+    <SwiperRoot>
       {swiperSetting && (
         <Swiper {...swiperSetting}>
           <SwiperSlide>
             <IntroText>
-              안녕하세요. 생존자님 Bloo Label Society에 참가하신 것을
-              환영합니다. 생존자님과의 소통을 위해 네 가지 질문을 드리고자
-              합니다.
+              안녕하세요. 생존자님.
+              <br />
+              Bloo Label Society에 참가하신 것을 환영합니다.
             </IntroText>
+            <IntroTextSecond>
+              생존자님과의 소통을 위해 네 가지 질문을 드리고자 합니다.
+            </IntroTextSecond>
           </SwiperSlide>
           <SwiperSlide>
-            <CharacterSection setCharacter={setCharacter} />
+            <CharacterSection
+              character={character}
+              setCharacter={setCharacter}
+            />
           </SwiperSlide>
           <SwiperSlide>
-            <ItemSection setItem={setItem} />
+            <ItemSection item={item} setItem={setItem} />
           </SwiperSlide>
           <SwiperSlide>
-            <WorthSection setWorth={setWorth} />
+            <WorthSection worth={worth} setWorth={setWorth} />
           </SwiperSlide>
           <SwiperSlide>
-            <LocationSection setLocation={setLocation} />
+            <LocationSection location={location} setLocation={setLocation} />
           </SwiperSlide>
-          <SwiperSlide>
-            <Image src={loadingImg} width={180} height={88} alt="loading" />
-          </SwiperSlide>
+          {findInfo == undefined && (
+            <SwiperSlide>
+              <Image src={loadingImg} style={{ width: '99%' }} alt="loading" />
+            </SwiperSlide>
+          )}
         </Swiper>
       )}
 
-     {!getBarcode &&  <>
-        <ButtonLeft slideIndex={slideIndex} ref={prevRef}>
-          이전
-        </ButtonLeft>
-        <ButtonRight ref={nextRef} onClick={GetBarcodeClick}>
-          {findInfo == undefined && slideIndex == 4 ? '완료' : '다음'}
-        </ButtonRight>
-      </>}
-    </>
+      {!getBarcode && (
+        <>
+          <ButtonLeft slideIndex={slideIndex} ref={prevRef}>
+            <Image src={prevBtn} sizes="100%" alt="prevBtn" />
+          </ButtonLeft>
+          <ButtonRight ref={nextRef} onClick={GetBarcodeClick}>
+            <Image src={nextBtn} sizes="100%" alt="nextBtn" />
+          </ButtonRight>
+        </>
+      )}
+    </SwiperRoot>
   )
 }

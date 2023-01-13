@@ -2,7 +2,19 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Global } from '@emotion/react'
 import { GlobalStyle } from '../styles/GlobalStyle'
+import { css } from '@emotion/react'
 import Head from 'next/head'
+
+const GlobalFonts = css`
+    @font-face {
+    font-family: 'KoreanRKTR';
+    src: url('/fonts/roket.ttf') format('ttf');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
+
+`;
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
@@ -15,7 +27,8 @@ export default function App({ Component, pageProps }: AppProps) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Global styles={GlobalStyle} />
+      <Global styles={GlobalStyle}  />
+      {/* <Global styles={GlobalFonts}/> */}
       <Component {...pageProps} />
     </>
   )
