@@ -1,11 +1,10 @@
+import Main from '@components/Main'
 import React, { useEffect } from 'react'
 import styled from '@emotion/styled'
-import Main from '@components/Main'
 
 const Wrapper = styled.div`
-  height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
-  touch-action: none;
+  height: calc(var(--vh, 1vh) * 100);
 `
 export default function Home() {
   useEffect(() => {
