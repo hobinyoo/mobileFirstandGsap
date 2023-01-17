@@ -28,12 +28,17 @@ interface ButtonProps {
 
 const SwiperRoot = styled.div`
   width: 100%;
+  padding-top: calc(var(--vh, 1vh) * 3);
   //스와이퍼 custom
   .swiper {
-    &-wrapper,
     &-container {
       display: flex;
       align-items: center;
+      width: 100%;
+      height: calc(var(--vh, 1vh) * 47);
+    }
+    &-wrapper {
+      height: 100%;
     }
     &-slide {
     }
@@ -53,13 +58,19 @@ const IntroTextSecond = styled.div`
 `
 const ButtonRight = styled.div`
   position: absolute;
-  right: 0;
-  bottom: 1vh;
+  right: 2vw;
+  bottom: calc(var(--vh, 1vh) * 0.5);
+  width: 6rem;
+  height: 3rem;
+  z-index: 1;
 `
 const ButtonLeft = styled.div<ButtonProps>`
   position: absolute;
-  left: 0;
-  bottom: 1vh;
+  left: 2vw;
+  z-index: 1;
+  width: 6rem;
+  height: 3rem;
+  bottom: calc(var(--vh, 1vh) * 0.5);
   opacity: ${(props) => (props.slideIndex == 0 ? '0' : '1')};
 `
 
@@ -159,10 +170,20 @@ export default function SelectSwiper({
       {!getBarcode && (
         <>
           <ButtonLeft slideIndex={slideIndex} ref={prevRef}>
-            <Image src={prevBtn} sizes="100%" alt="prevBtn" />
+            <Image
+              src={prevBtn}
+              fill
+              style={{ objectFit: 'contain', objectPosition: 'center' }}
+              alt="prevBtn"
+            />
           </ButtonLeft>
           <ButtonRight ref={nextRef} onClick={GetBarcodeClick}>
-            <Image src={nextBtn} sizes="100%" alt="nextBtn" />
+            <Image
+              src={nextBtn}
+              fill
+              style={{ objectFit: 'contain', objectPosition: 'center' }}
+              alt="nextBtn"
+            />
           </ButtonRight>
         </>
       )}

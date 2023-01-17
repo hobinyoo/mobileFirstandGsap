@@ -4,6 +4,11 @@ import selectInfoImg from '@images/selectInfo.png'
 import selectedInfoImg from '@images/selectedInfo.png'
 import Image from 'next/image'
 import { useState } from 'react'
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`
 const QuestionText = styled.div`
   font-size: var(--fontsm);
   text-align: center;
@@ -11,7 +16,7 @@ const QuestionText = styled.div`
   margin: auto;
 `
 const Selectul = styled.ul`
-  margin-top: 3vh;
+  margin-top: calc(var(--vh, 1vh) * 2);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -21,17 +26,15 @@ const Selectli = styled.li`
   display: flex;
   align-items: center;
   position: relative;
+  width: 65vw;
+  height: calc(var(--vh, 1vh) * 6);
+  margin-bottom: calc(var(--vh, 1vh) * 1);
+  z-index: -1;
 `
 const TextInfo = styled.p`
   position: absolute;
   margin-left: 8vw;
-`
-
-const ImageWrapper = styled.div`
-  position: relative;
-  width: 65vw;
-  height: 6vh;
-  z-index: -1;
+  z-index: 1;
 `
 
 const LocationSection = ({
@@ -44,7 +47,7 @@ const LocationSection = ({
   const Text = ['서울', '대전', '광주', '부산']
 
   return (
-    <>
+    <Wrapper>
       <QuestionText>본인 거주 지역과 가장 가까운 곳을 고르세요.</QuestionText>
 
       <Selectul>
@@ -57,32 +60,28 @@ const LocationSection = ({
           >
             <TextInfo>{value}</TextInfo>
             {location != value ? (
-              <ImageWrapper>
-                <Image
-                  fill
-                  priority
-                  style={{ objectFit: 'contain', objectPosition: 'center' }}
-                  src={selectInfoImg}
-                  sizes="100%"
-                  alt="selectInfo"
-                />
-              </ImageWrapper>
+              <Image
+                fill
+                priority
+                style={{ objectFit: 'contain', objectPosition: 'center' }}
+                src={selectInfoImg}
+                sizes="100%"
+                alt="selectInfo"
+              />
             ) : (
-              <ImageWrapper>
-                <Image
-                  fill
-                  priority
-                  style={{ objectFit: 'contain', objectPosition: 'center' }}
-                  src={selectedInfoImg}
-                  sizes="100%"
-                  alt="selectedInfo"
-                />
-              </ImageWrapper>
+              <Image
+                fill
+                priority
+                style={{ objectFit: 'contain', objectPosition: 'center' }}
+                src={selectedInfoImg}
+                sizes="100%"
+                alt="selectedInfo"
+              />
             )}
           </Selectli>
         ))}
       </Selectul>
-    </>
+    </Wrapper>
   )
 }
 

@@ -2,7 +2,6 @@ import { css } from '@emotion/react'
 
 //GlobalStyles
 export const GlobalStyle = css`
-
   @font-face {
     font-family: 'KoreanRKTR';
     src: url('/fonts/roket.ttf') format('ttf');
@@ -32,15 +31,15 @@ export const GlobalStyle = css`
     --secondary: #0a0b5b;
 
     // Fonts As per the type scale generator => https://material-io.cn/inline-tools/typography/
-    --fontBig: 7em; //88 px
-    --fontxxxl: 5.5em; //88 px
-    --fontxxl: 3.4375em; //55 px
-    --fontxl: 2.75em; //44 px
-    --fontlg: 1.9375em; //31 px
-    --fontmd: 1.375em; //22 px
-    --fontsm: 1.125em; //18 px
-    --fontxs: 1em; //16 px
-    --fontxxs: 0.75em; //12 px
+    --fontBig: 7rem; //88 px
+    --fontxxxl: 5.5rem; //88 px
+    --fontxxl: 3.4375rem; //55 px
+    --fontxl: 2.75rem; //44 px
+    --fontlg: 1.9375rem; //31 px
+    --fontmd: 1.375rem; //22 px
+    --fontsm: 1.125rem; //18 px
+    --fontxs: 1rem; //16 px
+    --fontxxs: 0.75rem; //12 px
     //font
 
     --fontR: 'KoreanRKTR';
@@ -87,10 +86,10 @@ export const GlobalStyle = css`
     border: none;
 
     /* 배경 색상 지정 */
-    background-color: black;
+    /* background-color: black; */
 
-    /* 모바일 웹 브라우저 당겨서 새로고침 막기 */
-    overscroll-behavior: contain;
+    /* 사파리 새로고침 막기 */
+    overflow: hidden;
+    /* overscroll-behavior: contain; */
   }
-  
 `

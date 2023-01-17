@@ -4,6 +4,11 @@ import selectInfoImg from '@images/selectInfo.png'
 import selectedInfoImg from '@images/selectedInfo.png'
 import Image from 'next/image'
 import { useState } from 'react'
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`
 const QuestionText = styled.div`
   font-size: var(--fontsm);
   text-align: center;
@@ -11,7 +16,7 @@ const QuestionText = styled.div`
   margin: auto;
 `
 const Selectul = styled.ul`
-  margin-top: 3vh;
+  margin-top: calc(var(--vh, 1vh) * 2);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -21,18 +26,17 @@ const Selectli = styled.li`
   display: flex;
   align-items: center;
   position: relative;
+  width: 65vw;
+  height: calc(var(--vh, 1vh) * 6);
+  margin-bottom: calc(var(--vh, 1vh) * 1);
+  z-index: -1;
 `
 const TextInfo = styled.p`
   position: absolute;
   margin-left: 8vw;
+  z-index: 1;
 `
 
-const ImageWrapper = styled.div`
-  position: relative;
-  width: 65vw;
-  height: 6vh;
-  z-index: -1;
-`
 
 const CharacterSection = ({
   character,
@@ -44,7 +48,7 @@ const CharacterSection = ({
   const Text = ['활동적인', '이타적인', '주목받는', '온화한']
 
   return (
-    <>
+    <Wrapper>
       <QuestionText>
         다음 중 자신을 잘 나타낸다고 생각되는 단어를 고르세요.
       </QuestionText>
@@ -59,7 +63,7 @@ const CharacterSection = ({
           >
             <TextInfo>{value}</TextInfo>
             {character != value ? (
-              <ImageWrapper>
+         
                 <Image
                   priority
                   src={selectInfoImg}
@@ -67,9 +71,9 @@ const CharacterSection = ({
                   style={{ objectFit: 'contain', objectPosition: 'center' }}
                   alt="selectInfo"
                 />
-              </ImageWrapper>
+            
             ) : (
-              <ImageWrapper>
+            
                 <Image
                   priority
                   fill
@@ -78,12 +82,12 @@ const CharacterSection = ({
                   sizes="100%"
                   alt="selectedInfo"
                 />
-              </ImageWrapper>
+           
             )}
           </Selectli>
         ))}
       </Selectul>
-    </>
+    </Wrapper>
   )
 }
 
