@@ -9,6 +9,7 @@ import styled from '@emotion/styled'
 import Image from 'next/image'
 import nextBtn from '@images/nextBtn.png'
 import prevBtn from '@images/prevBtn.png'
+import { useRouter } from 'next/router'
 
 // Import Swiper React components
 import SwiperCore, { Navigation, Scrollbar } from 'swiper'
@@ -74,19 +75,14 @@ const ButtonLeft = styled.div<ButtonProps>`
   opacity: ${(props) => (props.slideIndex == 0 ? '0' : '1')};
 `
 
-export default function SelectSwiper({
-  getBarcode,
-  setGetBarcode,
-}: {
-  getBarcode: boolean
-  setGetBarcode: Dispatch<SetStateAction<boolean>>
-}) {
+export default function SelectSwiper() {
   SwiperCore.use([Navigation, Scrollbar])
 
   const [swiperSetting, setSwiperSetting] = useState<Swiper | null>(null)
   const nextRef = useRef<HTMLDivElement>(null)
   const prevRef = useRef<HTMLDivElement>(null)
 
+  const router = useRouter()
   //silde Index
   const [slideIndex, setSlideIndex] = useState<number>(0)
 
@@ -130,7 +126,7 @@ export default function SelectSwiper({
 
   const GetBarcodeClick = () => {
     if (findInfo == undefined && slideIndex == 4) {
-      setGetBarcode(true)
+      router.push('/test2')
     } else if (findInfo != undefined && slideIndex == 4) {
       alert('정보 입력을 완료해주세요.')
     }
@@ -167,26 +163,24 @@ export default function SelectSwiper({
         </Swiper>
       )}
 
-      {!getBarcode && (
-        <>
-          <ButtonLeft slideIndex={slideIndex} ref={prevRef}>
-            <Image
-              src={prevBtn}
-              fill
-              style={{ objectFit: 'contain', objectPosition: 'center' }}
-              alt="prevBtn"
-            />
-          </ButtonLeft>
-          <ButtonRight ref={nextRef} onClick={GetBarcodeClick}>
-            <Image
-              src={nextBtn}
-              fill
-              style={{ objectFit: 'contain', objectPosition: 'center' }}
-              alt="nextBtn"
-            />
-          </ButtonRight>
-        </>
-      )}
+      <>
+        <ButtonLeft slideIndex={slideIndex} ref={prevRef}>
+          <Image
+            src={prevBtn}
+            fill
+            style={{ objectFit: 'contain', objectPosition: 'center' }}
+            alt="prevBtn"
+          />
+        </ButtonLeft>
+        <ButtonRight ref={nextRef} onClick={GetBarcodeClick}>
+          <Image
+            src={nextBtn}
+            fill
+            style={{ objectFit: 'contain', objectPosition: 'center' }}
+            alt="nextBtn"
+          />
+        </ButtonRight>
+      </>
     </SwiperRoot>
   )
 }

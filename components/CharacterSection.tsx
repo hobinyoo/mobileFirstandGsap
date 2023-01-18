@@ -11,9 +11,9 @@ const Wrapper = styled.div`
 `
 const QuestionText = styled.div`
   font-size: var(--fontsm);
-  text-align: center;
   width: 90%;
   margin: auto;
+  text-align: center;
 `
 const Selectul = styled.ul`
   margin-top: calc(var(--vh, 1vh) * 2);
@@ -29,14 +29,12 @@ const Selectli = styled.li`
   width: 65vw;
   height: calc(var(--vh, 1vh) * 6);
   margin-bottom: calc(var(--vh, 1vh) * 1);
-  z-index: -1;
 `
 const TextInfo = styled.p`
   position: absolute;
   margin-left: 8vw;
   z-index: 1;
 `
-
 
 const CharacterSection = ({
   character,
@@ -49,9 +47,7 @@ const CharacterSection = ({
 
   return (
     <Wrapper>
-      <QuestionText>
-        다음 중 자신을 잘 나타낸다고 생각되는 단어를 고르세요.
-      </QuestionText>
+      <QuestionText>다음 중 자신을 잘 나타낸다고 생각되는 단어를 고르세요.</QuestionText>
 
       <Selectul>
         {Text.map((value, index) => (
@@ -63,26 +59,21 @@ const CharacterSection = ({
           >
             <TextInfo>{value}</TextInfo>
             {character != value ? (
-         
-                <Image
-                  priority
-                  src={selectInfoImg}
-                  fill
-                  style={{ objectFit: 'contain', objectPosition: 'center' }}
-                  alt="selectInfo"
-                />
-            
+              <Image
+                priority
+                src={selectInfoImg}
+                fill
+                style={{ objectFit: 'contain', objectPosition: 'center' }}
+                alt="selectInfo"
+              />
             ) : (
-            
-                <Image
-                  priority
-                  fill
-                  style={{ objectFit: 'contain', objectPosition: 'center' }}
-                  src={selectedInfoImg}
-                  sizes="100%"
-                  alt="selectedInfo"
-                />
-           
+              <Image
+                priority
+                src={selectedInfoImg}
+                fill
+                style={{ objectFit: 'contain', objectPosition: 'center' }}
+                alt="selectedInfo"
+              />
             )}
           </Selectli>
         ))}

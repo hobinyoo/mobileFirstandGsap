@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <Wrapper>
-      <Main />
+      {/* <Main /> */}
     </Wrapper>
   )
 }

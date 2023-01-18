@@ -128,6 +128,7 @@ export default function Main() {
     //fromto에서 일어나는 일은 생겨난 스크롤 동안 일어나는 변화를 감지
     //to는 순차적으로
     //fromto에서 key도 순차적으로 할 수 있음
+    
     if (getBarcode) {
       window.scrollTo({
         top: DivElem?.scrollTop,
@@ -182,8 +183,8 @@ export default function Main() {
             pinSpacing: true,
             start: 'top top',
             end: '+=3500',
-            anticipatePin: 1,
-            markers: true
+            // markers: true,
+            pinType: 'fixed',
           },
         })
         .to(SlideElem, { y: '50%', opacity: '0', zIndex: '0' }, 'key1')
@@ -197,10 +198,11 @@ export default function Main() {
           'key2'
         )
         .to(GetInfoElem, { scale: 1 }, 'key2')
-
+    
       return () => {
         if (t1) t1.kill()
       }
+
     }
   }, [getBarcode])
 
@@ -226,12 +228,12 @@ export default function Main() {
         </Slide>
 
         <SectionInner ref={innerRef}>
-          {!getBarcode && (
+          {/* {!getBarcode && (
             <SelectSwiper
               getBarcode={getBarcode}
               setGetBarcode={setGetBarcode}
             />
-          )}
+          )} */}
         </SectionInner>
 
         {getBarcode && (

@@ -76,21 +76,12 @@ export const GlobalStyle = css`
   }
 
   /* base styles */
-
   html,
   body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    border: none;
-
     /* 배경 색상 지정 */
     background-color: black;
-
     /* 사파리 새로고침 막기 */
     overflow-x: hidden;
     /* overscroll-behavior: contain; */
-    /* overflow-x: hidden; */
   }
 `

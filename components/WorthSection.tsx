@@ -11,9 +11,9 @@ const Wrapper = styled.div`
 `
 const QuestionText = styled.div`
   font-size: var(--fontsm);
-  text-align: center;
   width: 80%;
   margin: auto;
+  text-align: center;
 `
 const Selectul = styled.ul`
   margin-top: calc(var(--vh, 1vh) * 2);
@@ -29,7 +29,6 @@ const Selectli = styled.li`
   width: 65vw;
   height: calc(var(--vh, 1vh) * 6);
   margin-bottom: calc(var(--vh, 1vh) * 1);
-  z-index: -1;
 `
 const TextInfo = styled.p`
   position: absolute;
@@ -47,7 +46,7 @@ const WorthSection = ({
   const Text = ['가족', '일', '외모', '재력']
 
   return (
-    <>
+    <Wrapper>
       <QuestionText>가장 중요하게 생각하는 가치를 고르세요.</QuestionText>
 
       <Selectul>
@@ -61,27 +60,25 @@ const WorthSection = ({
             <TextInfo>{value}</TextInfo>
             {worth != value ? (
               <Image
-                fill
                 priority
-                style={{ objectFit: 'contain', objectPosition: 'center' }}
                 src={selectInfoImg}
-                sizes="100%"
+                fill
+                style={{ objectFit: 'contain', objectPosition: 'center' }}
                 alt="selectInfo"
               />
             ) : (
               <Image
-                fill
                 priority
-                style={{ objectFit: 'contain', objectPosition: 'center' }}
                 src={selectedInfoImg}
-                sizes="100%"
+                fill
+                style={{ objectFit: 'contain', objectPosition: 'center' }}
                 alt="selectedInfo"
               />
             )}
           </Selectli>
         ))}
       </Selectul>
-    </>
+    </Wrapper>
   )
 }
 

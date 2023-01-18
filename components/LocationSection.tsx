@@ -11,9 +11,9 @@ const Wrapper = styled.div`
 `
 const QuestionText = styled.div`
   font-size: var(--fontsm);
-  text-align: center;
   width: 90%;
   margin: auto;
+  text-align: center;
 `
 const Selectul = styled.ul`
   margin-top: calc(var(--vh, 1vh) * 2);
@@ -29,7 +29,6 @@ const Selectli = styled.li`
   width: 65vw;
   height: calc(var(--vh, 1vh) * 6);
   margin-bottom: calc(var(--vh, 1vh) * 1);
-  z-index: -1;
 `
 const TextInfo = styled.p`
   position: absolute;
@@ -48,7 +47,7 @@ const LocationSection = ({
 
   return (
     <Wrapper>
-      <QuestionText>본인 거주 지역과 가장 가까운 곳을 고르세요.</QuestionText>
+      <QuestionText>보인 거주 지역과 가장 가까운 곳을 고르세요.</QuestionText>
 
       <Selectul>
         {Text.map((value, index) => (
@@ -61,20 +60,18 @@ const LocationSection = ({
             <TextInfo>{value}</TextInfo>
             {location != value ? (
               <Image
-                fill
                 priority
-                style={{ objectFit: 'contain', objectPosition: 'center' }}
                 src={selectInfoImg}
-                sizes="100%"
+                fill
+                style={{ objectFit: 'contain', objectPosition: 'center' }}
                 alt="selectInfo"
               />
             ) : (
               <Image
-                fill
                 priority
-                style={{ objectFit: 'contain', objectPosition: 'center' }}
                 src={selectedInfoImg}
-                sizes="100%"
+                fill
+                style={{ objectFit: 'contain', objectPosition: 'center' }}
                 alt="selectedInfo"
               />
             )}
