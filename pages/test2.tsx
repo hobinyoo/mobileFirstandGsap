@@ -20,6 +20,7 @@ const Section = styled.section`
   background-color: black;
   position: fixed;
   font-family: var(--fontR);
+
 `
 const BackImage = styled.div`
   width: 100vw;
@@ -76,7 +77,6 @@ export default function Test() {
 
   useEffect(() => {
     let Elem = sectionRef.current
-
     let startY = 0
 
     Elem?.addEventListener(
@@ -91,7 +91,7 @@ export default function Test() {
       function (e: any) {
         var currentY = e.changedTouches[0].pageY
         if (sectionRef.current?.scrollTop! <= 0 && startY <= currentY) {
-          e.preventDefault()
+          // e.preventDefault()
           return false
         }
       },

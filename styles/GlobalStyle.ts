@@ -1,6 +1,8 @@
 import { css } from '@emotion/react'
-
+import { use, useEffect } from 'react'
 //GlobalStyles
+
+
 export const GlobalStyle = css`
   @font-face {
     font-family: 'KoreanRKTR';
@@ -83,5 +85,7 @@ export const GlobalStyle = css`
     /* 사파리 새로고침 막기 */
     overflow-x: hidden;
     /* overscroll-behavior: contain; */
+    min-height: calc(var(--vh, 1vh) * 100);
+    min-height: -webkit-fill-available;
   }
 `

@@ -126,7 +126,7 @@ export default function SelectSwiper() {
 
   const GetBarcodeClick = () => {
     if (findInfo == undefined && slideIndex == 4) {
-      router.push('/test2')
+      window.location.replace('/test2')
     } else if (findInfo != undefined && slideIndex == 4) {
       alert('정보 입력을 완료해주세요.')
     }
